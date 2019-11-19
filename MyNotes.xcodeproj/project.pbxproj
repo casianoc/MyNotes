@@ -14,6 +14,7 @@
 		C73A82B0238434DD0090E0D3 /* MyNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C73A82AE238434DD0090E0D3 /* MyNotes.xcdatamodeld */; };
 		C73A82B2238434DE0090E0D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C73A82B1238434DE0090E0D3 /* Assets.xcassets */; };
 		C73A82B5238434DE0090E0D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C73A82B3238434DE0090E0D3 /* LaunchScreen.storyboard */; };
+		C73A82BD2384364E0090E0D3 /* MyNotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73A82BC2384364E0090E0D3 /* MyNotesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C73A82B1238434DE0090E0D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C73A82B4238434DE0090E0D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C73A82B6238434DE0090E0D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C73A82BC2384364E0090E0D3 /* MyNotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNotesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				C73A82B3238434DE0090E0D3 /* LaunchScreen.storyboard */,
 				C73A82B6238434DE0090E0D3 /* Info.plist */,
 				C73A82AE238434DD0090E0D3 /* MyNotes.xcdatamodeld */,
+				C73A82BC2384364E0090E0D3 /* MyNotesTableViewController.swift */,
 			);
 			path = MyNotes;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73A82BD2384364E0090E0D3 /* MyNotesTableViewController.swift in Sources */,
 				C73A82AA238434DD0090E0D3 /* ViewController.swift in Sources */,
 				C73A82A6238434DD0090E0D3 /* AppDelegate.swift in Sources */,
 				C73A82A8238434DD0090E0D3 /* SceneDelegate.swift in Sources */,
@@ -298,7 +302,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CameronCasiano.MyNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -316,7 +320,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CameronCasiano.MyNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
