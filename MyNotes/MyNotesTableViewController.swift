@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class MyNotesTableViewController: UITableViewController {
 
@@ -52,6 +53,67 @@ class MyNotesTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let _ = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
+
+        var dateTextField = UITextField()
+        
+        let alert = UIAlertController(title: notes[indexPath.row].title, message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Change", style: .default, handler: { (action) in
+            
+            let note = self.notes[indexPath.row]
+            
+            note.date = dateTextField.text
+            
+            self.saveMyNotes()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default
+            , handler: {(cancelAction) in
+        })
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        
+        alert.addTextField(configurationHandler: { (field) in
+            dateTextField = field
+            dateTextField.text = self.notes[indexPath.row].date
+        })
+        
+        present(alert, animated: true, completion: nil)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+    func notesDoneNotification(){
+        
+        var done = true
+        
+            if notes.count > 0{
+                done = false
+            }
+        
+        if done == true{
+            
+            // create content object that controls the content and sound of the notification
+            let content = UNMutableNotificationContent()
+            content.title = "MyNotes"
+            content.body = "All Notes Deleted"
+            content.sound = UNNotificationSound.default
+            
+            // create trigger object that defines when notification will be sent and if it should be sent repeatedly
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            
+            // create a rewuest object that is responsible for creating the notification
+            let request = UNNotificationRequest(identifier: "notesIdentifier", content: content, trigger: trigger)
+            
+            // post the notification
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        }
+    }
+    
     @IBAction func addButton(_ sender: UIBarButtonItem) {
         // declare text fields variables for the input of the name store and date
         var titleTextField = UITextField()
@@ -69,6 +131,12 @@ class MyNotesTableViewController: UITableViewController {
             // get name, store, and date input by user and store them in ShoppingList entity
             newNote.title = titleTextField.text!
             newNote.type = typeTextField.text!
+            let date = Date()
+            let format = DateFormatter()
+            format.dateFormat = "yyyy-MM-dd"
+            let formattedDate = format.string(from: date)
+            newNote.date = formattedDate
+            
             
             // add shoppinglist entity to array
             self.notes.append(newNote)
@@ -126,11 +194,6 @@ class MyNotesTableViewController: UITableViewController {
         cell.textLabel?.text = note.title!
         cell.detailTextLabel!.numberOfLines = 0
         
-        let date = Date()
-        let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd"
-        let formattedDate = format.string(from: date)
-        note.date = formattedDate
         
         cell.detailTextLabel?.text = note.type! + "\n" + note.date!
         
@@ -159,6 +222,19 @@ class MyNotesTableViewController: UITableViewController {
         }
     }
     
+    func deleteNote (item: Note){
+        context.delete(item)
+        
+        do {
+            // use context to delete ShoppingList Item from Core Data
+            try context.save()
+        } catch {
+            print("Error deleting Note from Core Data")
+        }
+        loadMyNotes()
+        notesDoneNotification()
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -167,17 +243,14 @@ class MyNotesTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let item = notes[indexPath.row]
+            deleteNote(item: item)
     }
-    */
+
 
     /*
     // Override to support rearranging the table view.
@@ -204,4 +277,5 @@ class MyNotesTableViewController: UITableViewController {
     }
     */
 
+}
 }
